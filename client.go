@@ -99,6 +99,8 @@ func ConnectWithUnixSocket(socketFile string) (*OvsdbClient, error) {
 
 // Register registers the supplied NotificationHandler to recieve OVSDB Notifications
 func (ovs *OvsdbClient) Register(handler NotificationHandler) {
+	connectionsMutex.Lock()
+	defer connectionsMutex.Unlock()
 	ovs.handlers = append(ovs.handlers, handler)
 }
 
